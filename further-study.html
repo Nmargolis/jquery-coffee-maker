@@ -17,6 +17,8 @@
         <br>
 
         <img id="coffee_image" src="FIXME" alt="make this image work" height="300" width="200">
+        <img id="coffee_machine" class="hidden" src="static/coffee_machine.jpg" alt="image of coffee machine" height="300" width="200">
+        <img id="coffee_mug" class="hidden" src="static/coffee_mug.jpg" atl="image of coffee mug" height="300" width="200">
 
         <h3 id="message">Click The Image To Order Coffee</h3>
 
@@ -43,15 +45,23 @@
     </div>
 </div>
 
+<script src="http://code.jquery.com/jquery.js"></script>
+
 <script>
 
-    var myImage = document.getElementById("coffee_image");
-    var myRevenueMessage = document.getElementById("revenue");
+    // var myImage = document.getElementById("coffee_image");
+    var coffeeBeansImg = $("#coffee_image");
+    var coffeeMachineImg = $("#coffee_machine");
+    var coffeeMugImg = $("#coffee_mug");
+
+    var myRevenueMessage = $("#revenue");
+
 
     var drinksOrdered = [];
 
-    myImage.src = "static/coffee_beans.jpg";
-    myImage.addEventListener('click', function () { return makeCoffee("brew"); });
+    // myImage.src = "static/coffee_beans.jpg"; // What the heck is this?
+    coffeeBeansImg.attr('src', "static/coffee_beans.jpg");
+    coffeeBeansImg.on('click', function () { return makeCoffee("brew"); });
 
     // Append the drink_type to drinks_ordered and use console.log to view the output
 
@@ -59,24 +69,25 @@
         drinksOrdered.push(drinkType);
         console.log(drinksOrdered);
 
-        var myRevenue = revenue();
-        myRevenueMessage.innerHTML = "Today's revenues: " + myRevenue;
+        var myRevenue = revenue(); // And what's this?
+        myRevenueMessage.html("Today's revenues: " + myRevenue);
 
-        myImage.setAttribute('src', "static/coffee_machine.jpg");
-        setTimeout(function () { myImage.setAttribute('src', "static/coffee_mug.jpg"); }, 500);
-        setTimeout(function () { myImage.setAttribute('src', "static/coffee_beans.jpg"); }, 1500);
+        coffeeBeansImg.fadeOut(2000);
+        setTimeout(function () { coffeeMachineImg.fadeIn(2000); }, 2000);
+        setTimeout(function () { coffeeMachineImg.fadeOut(2000); }, 6000);
+        setTimeout(function () { coffeeBeansImg.fadeIn(2000); }, 8000);
     }
 
 
     // Create variables for Espresso, Latte, and Hot Chocolate;
     // and add an event listener to each that calls make_coffee
-    var espresso = document.getElementById("espresso");
-    var latte = document.getElementById("latte");
-    var hotChocolate = document.getElementById("hot-chocolate");
+    var espresso = $("#espresso");
+    var latte = $("#latte");
+    var hotChocolate = $("#hot-chocolate");
 
-    espresso.addEventListener('click', function () { return makeCoffee("espresso"); });
-    latte.addEventListener('click', function () { return makeCoffee("latte"); });
-    hotChocolate.addEventListener('click', function () { return makeCoffee("hot chocolate"); });
+    espresso.on('click', function () { return makeCoffee("espresso"); });
+    latte.on('click', function () { return makeCoffee("latte"); });
+    hotChocolate.on('click', function () { return makeCoffee("hot chocolate"); });
 
     // Use this dictionary to calculate profits for the day and log them to the console.
 
